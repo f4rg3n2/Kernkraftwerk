@@ -1,4 +1,4 @@
-package Kuehlkreislauf;
+package Kreislauf;
 
 public class Waermetauscher {
 	
