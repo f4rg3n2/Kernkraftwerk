@@ -7,21 +7,21 @@ import Exception.PumpException;
 
 public class Pumpe implements Runnable {
 	private int l;
-	private LinkedList<Integer> list;
+	private Queue<Integer> queue;
 	private Waermetauscher ersterw;
 	private Waermetauscher zweiterw;
 
-	public Pumpe(LinkedList<Integer> list, int l) {
-		this.list = list;
+	public Pumpe(Queue<Integer> queue, int l) {
+		this.queue = queue;
 		this.l = l;
-		ersterw = new Waermetauscher(list.getLast(), 10);
-		zweiterw = new Waermetauscher(list.getFirst(), ersterw.waerme());
+//		ersterw = new Waermetauscher(queue.peek(), 10);
+//		zweiterw = new Waermetauscher(queue.peek(), ersterw.waerme());
 	}
 
 	public int ersterWaermetauscher() {
-		list.removeLast();
-		list.addFirst(ersterw.waerme());
-		return list.getFirst();
+//		list.removeLast();
+//		list.addFirst(ersterw.waerme());
+		return queue.peek();
 	}
 
 	@Override
@@ -29,22 +29,23 @@ public class Pumpe implements Runnable {
 		//int i = 0;
 		try {
 			while(true) {
-				synchronized (list) {
-					while (list.size() > 12) {
-						list.wait();
+				synchronized (queue) {
+					while (queue.size() > 12) {
+						queue.wait();
 					}
 
 				
-					list.add(10);
-					list.notifyAll();
+					queue.add(10);
+					queue.notifyAll();
 
 //					if (list.size() == 12) {
 //						ersterWaermetauscher();
 //						list.removeFirst();
 //						list.addFirst(zweiterw.waerme());
 //					}
-					System.out.print(Thread.currentThread().getName() + ":"
-					        + ersterWaermetauscher() + "\t");
+					int i = queue.peek();
+					System.out.println(Thread.currentThread().getName() + ":"
+					        + i + "\t");
 					//++i;
 
 				}

@@ -1,22 +1,25 @@
 package Kreislauf;
 import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class Reaktor implements Runnable {
 	private static final int erwaermungko = 42;
 	private int waerme = 10;
 	private int l;
-	private LinkedList<Integer> list;
+	private Queue<Integer> queue;
 	
-	public Reaktor(LinkedList<Integer> list, int l){
-		this.list = list;
+	public Reaktor(Queue<Integer> queue, int l){
+		this.queue = queue;
 		this.l = l;
+
 	}
 	
 	
 	public int abwaerme(){
-		waerme = list.getFirst() + 1;
-		list.addFirst(waerme);
+
+		waerme = queue.poll()+1;
+//		list.addFirst(waerme);
 		return waerme;
 	}
 
@@ -25,12 +28,13 @@ public class Reaktor implements Runnable {
     public void run() {
 	    try{
 	    	while(true){
-	    		synchronized(list){
-	    			while(list.isEmpty()){
-	    				list.wait();
+	    		synchronized(queue){
+	    			while(queue.isEmpty()){
+	    				queue.wait();
 	    			}
-	    			list.notifyAll();
-	    			System.out.print(Thread.currentThread().getName() +": "+abwaerme()+", ");
+	    			
+	    			queue.notifyAll();
+	    			System.out.println(Thread.currentThread().getName() +": "+abwaerme()+", ");
 	    		}
 	    		Thread.sleep(l);
 	    	}
