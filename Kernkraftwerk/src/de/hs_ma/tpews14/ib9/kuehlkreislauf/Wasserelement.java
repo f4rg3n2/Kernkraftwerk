@@ -13,5 +13,11 @@ public class Wasserelement {
 	public void setTemperatur(int temperatur) {
 		this.temperatur = temperatur;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Temperatur: "+ temperatur;
+	}
 
 }
