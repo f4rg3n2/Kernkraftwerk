@@ -1,3 +1,6 @@
+package de.hs_ma.tpews14.ib9.reaktor;
+import de.hs_ma.tpews14.ib9.kuehlkreislauf.Wasserelement;
+
 public class Reaktor extends Thread {
 
 	private volatile Wasserelement temperatur;
@@ -11,7 +14,7 @@ public class Reaktor extends Thread {
 		while (true) {
 			synchronized (temperatur) {
 				temperatur.setTemperatur(temperatur.getTemperatur() + 1);
-				System.out.println(temperatur.getTemperatur());
+				//System.out.println(temperatur.getTemperatur());
 			}
 			try {
 				Thread.sleep(1000/42);

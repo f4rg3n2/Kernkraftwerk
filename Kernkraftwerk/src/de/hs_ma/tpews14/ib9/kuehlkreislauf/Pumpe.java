@@ -1,5 +1,9 @@
+package de.hs_ma.tpews14.ib9.kuehlkreislauf;
+
 import java.util.LinkedList;
 import java.util.Queue;
+
+import de.hs_ma.tpews14.ib9.reaktor.Reaktor;
 
 public class Pumpe extends Thread {
 
