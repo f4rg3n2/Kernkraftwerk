@@ -11,13 +11,27 @@ public class Reaktor extends Thread {
 	private boolean leben;
 	private long zeit;
 
+	/**
+	 * Initialisiert eine Temperatur(temperatur), die die Temperatur der
+	 * Flusswassers darstellt. Initialisiert eine Variable(leben), die die
+	 * Laufzeit des Threads beendet und eine Variable(zeit), die das aktuelle
+	 * Datum besitzt.
+	 * 
+	 */
 	public Reaktor() {
 		temperatur = new Wasserelement(10);
 		leben = true;
 		zeit = new Date().getTime();
 	}
-	
-	public Reaktor (Wasserelement w){
+
+	/**
+	 * Ruft dein oberen Konstruktor auf.
+	 * 
+	 * @param w
+	 *            Mann kann eine Temperatur des Wassers einstellen um eine
+	 *            Kernschmelze zu simulieren.
+	 */
+	public Reaktor(Wasserelement w) {
 		this();
 		temperatur = w;
 	}
@@ -29,8 +43,9 @@ public class Reaktor extends Thread {
 			synchronized (temperatur) {
 				temperatur.setTemperatur(temperatur.getTemperatur() + 1);
 			}
-			if (temperatur.getTemperatur() >= 2878 || new Date().getTime()-zeit >= 20000) {
-					leben = false;
+			if (temperatur.getTemperatur() >= 2878
+					|| new Date().getTime() - zeit >= 20000) {
+				leben = false;
 			} else {
 				try {
 					Thread.sleep(1000 / 42);
@@ -45,7 +60,8 @@ public class Reaktor extends Thread {
 	public Wasserelement getTemperatur() {
 		return temperatur;
 	}
-	public long getZeit(){
+
+	public long getZeit() {
 		return zeit;
 	}
 

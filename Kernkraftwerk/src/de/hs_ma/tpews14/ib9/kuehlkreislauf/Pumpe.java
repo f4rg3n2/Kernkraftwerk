@@ -16,6 +16,18 @@ public class Pumpe extends Thread {
 	private boolean laeuft = true;
 	private long zeit;
 
+	/**
+	 * Initialisiert 2 Queues, die den Wasserkreislauf simulieren. Einmal von
+	 * Reaktor zu fluss und von Fluss zu Reaktor mit jeweils 6 Wasserelementen.
+	 * Initialisiert eine Variable (zeit), die die aktuelle Zeit vom Reaktor dar
+	 * stellt.
+	 * 
+	 * @param pumpFrequenz
+	 *            stellt die Leistung dar, wie schnell die Pumpe in der Sekunde
+	 *            pumpt.
+	 * @param reaktor
+	 *            , welcher der von der Pumpe gekuehlt werden soll.
+	 */
 	public Pumpe(int pumpFrequenz, Reaktor reaktor) {
 		this.reaktor = reaktor;
 		this.pumpFrequenz = 1000 / pumpFrequenz;
@@ -39,12 +51,12 @@ public class Pumpe extends Thread {
 			}
 			System.out.print("Reaktor: "
 					+ flussZuReaktor.peek().getTemperatur());
-			
+
 			reaktorZuFluss.add(flussZuReaktor.poll());
-			
+
 			Waermetauscher.waermeAusgleichen(reaktorZuFluss.peek(),
 					Fluss.gibWasser());
-			
+
 			System.out.print(" Fluss: " + reaktorZuFluss.peek().getTemperatur()
 					+ "\n");
 
@@ -68,12 +80,19 @@ public class Pumpe extends Thread {
 		}
 
 	}
-	
+
+	public Queue<Wasserelement> getReaktorZuFluss() {
+		return reaktorZuFluss;
+	}
+
+	public Queue<Wasserelement> getFlussZuReaktor() {
+		return flussZuReaktor;
+	}
+
 	@Override
 	public String toString() {
-		return "Reaktor: "
-				+ flussZuReaktor.peek().getTemperatur() +" Fluss: " + reaktorZuFluss.peek().getTemperatur()
-				+ "\n";
+		return "Reaktor: " + flussZuReaktor.peek().getTemperatur() + " Fluss: "
+				+ reaktorZuFluss.peek().getTemperatur() + "\n";
 	}
 
 }
